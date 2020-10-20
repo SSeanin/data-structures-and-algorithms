@@ -11,16 +11,16 @@ class Disk:
 
 class Stack:
     def __init__(self, name: str):
-        self.data = []
-        self.name = name
+        self.data: [Disk] = []
+        self.name: str = name
 
-    def push(self, data: Disk):
+    def push(self, data: Disk) -> None:
         self.data.append(data)
 
     def pop(self) -> Disk:
         return self.data.pop()
 
-    def peek(self):
+    def peek(self) -> Disk:
         try:
             return self.data[-1]
         except IndexError:
@@ -29,14 +29,14 @@ class Stack:
     def is_empty(self) -> bool:
         return len(self.data) == 0
 
-    def size(self):
+    def size(self) -> int:
         return len(self.data)
 
     def __str__(self):
         return str(self.data)
 
 
-def legal_move(pole_a: Stack, pole_b: Stack):
+def legal_move(pole_a: Stack, pole_b: Stack) -> None:
     if pole_a.is_empty() and not pole_b.is_empty():
         print(f'Moving {pole_b.peek().weight} from {pole_b.name} to {pole_a.name}')
         pole_a.push(pole_b.pop())
@@ -54,7 +54,7 @@ def legal_move(pole_a: Stack, pole_b: Stack):
         pole_b.push(pole_a.pop())
 
 
-def towers(no_of_disks, src=Stack('A'), dest=Stack('C'), aux=Stack('B')):
+def towers(no_of_disks: int, src=Stack('A'), dest=Stack('C'), aux=Stack('B')):
     for i in range(1, no_of_disks + 1):
         src.push(Disk(i))
 
@@ -70,7 +70,3 @@ def towers(no_of_disks, src=Stack('A'), dest=Stack('C'), aux=Stack('B')):
             legal_move(src, aux)
             if dest.size() < no_of_disks:
                 legal_move(aux, dest)
-
-
-if __name__ == '__main__':
-    towers(3)
