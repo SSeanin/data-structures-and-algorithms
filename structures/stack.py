@@ -19,10 +19,11 @@ class Stack:
         return str(self.data)
 
     def __iter__(self):
-        for el in self.data:
-            yield el
+        for element in self.data:
+            yield element
 
 
+# Double Ended Stack
 class DoubleEndedStack:
     def __init__(self):
         self.data = []
