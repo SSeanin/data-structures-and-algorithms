@@ -18,6 +18,10 @@ class Stack:
     def __str__(self):
         return str(self.data)
 
+    def __iter__(self):
+        for el in self.data:
+            yield el
+
 
 class DoubleEndedStack:
     def __init__(self):
