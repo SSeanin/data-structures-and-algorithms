@@ -1,3 +1,4 @@
-from algorithms.notations import postfix_to_infix
+from algorithms.notations import eval_postfix
 
-print(postfix_to_infix('2 3 + 4 5 - *'))
+print(eval_postfix('2 4 5 - 11 + / 3 2 - * 5 *'))
+
