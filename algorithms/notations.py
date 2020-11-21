@@ -2,14 +2,13 @@ from structures.stack import Stack
 
 
 def postfix_to_infix(expression: str) -> str:
-    operators = ['+', '-', '*', '/']
     result = ''
     tmp = Stack()
 
     comps = expression.split(' ')
 
     for component in comps:
-        if component not in operators:
+        if component.isalnum():
             tmp.push(component)
         else:
             right_operand = tmp.pop()
@@ -65,7 +64,24 @@ def infix_to_prefix(expression: str) -> str:
 
 
 def postfix_to_prefix(expression: str) -> str:
-    pass
+    result = ''
+    tmp = Stack()
+
+    comps = expression.split(' ')
+
+    for component in comps:
+        if component.isalnum():
+            tmp.push(component)
+        else:
+            right_operand = tmp.pop()
+            left_operand = tmp.pop()
+
+            tmp.push(f'{component} {left_operand} {right_operand}')
+
+    for component in tmp:
+        result += component
+
+    return result
 
 
 def eval_postfix(expression: str) -> str:
