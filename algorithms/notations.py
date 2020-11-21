@@ -22,7 +22,7 @@ def postfix_to_infix(expression: str) -> str:
     return result
 
 
-def infix_to_prefix(expression: str) -> str:
+def infix_to_postfix(expression: str) -> str:
     operators = ['*', '/', '+', '-']
     result = ''
     tmp_op = Stack()
