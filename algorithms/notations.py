@@ -23,6 +23,51 @@ def postfix_to_infix(expression: str) -> str:
     return result
 
 
+def infix_to_prefix(expression: str) -> str:
+    operators = ['*', '/', '+', '-']
+    result = ''
+    tmp_op = Stack()
+
+    comps = expression.split(' ')
+
+    def has_higher_precedence(operator, compare):
+        low_precedence = ['+', '-']
+        high_precedence = ['*', '/']
+
+        if operator in high_precedence and compare in low_precedence:
+            return True
+        elif operator in low_precedence and compare in high_precedence:
+            return False
+
+        return True
+
+    for component in comps:
+        if component.isalnum():
+            result += f'{component} '
+
+        elif component in operators:
+            while not tmp_op.is_empty() and has_higher_precedence(tmp_op.peek(), component) and tmp_op.peek() != '(':
+                result += f'{tmp_op.pop()} '
+            tmp_op.push(component)
+
+        elif component == '(':
+            tmp_op.push(component)
+
+        elif component == ')':
+            while not tmp_op.is_empty() and tmp_op.peek() != '(':
+                result += f'{tmp_op.pop()} '
+            tmp_op.pop()
+
+    while not tmp_op.is_empty():
+        result += f'{tmp_op.pop()} '
+
+    return result
+
+
+def postfix_to_prefix(expression: str) -> str:
+    pass
+
+
 def eval_postfix(expression: str) -> str:
     operators = ['+', '-', '*', '/']
     tmp = Stack()
