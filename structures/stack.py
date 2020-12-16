@@ -1,3 +1,6 @@
+import structures.linkedlist as linked_list
+
+
 # Stack implementation
 class Stack:
     def __init__(self):
@@ -54,3 +57,17 @@ class DoubleEndedStack:
 
     def __str__(self):
         return str(self.data)
+
+
+class LinkedListStack:
+    def __init__(self):
+        self.data = linked_list.LinkedList()
+
+    def push(self, data):
+        self.data.insert_first(data)
+
+    def pop(self):
+        return self.data.remove_head()
+
+    def __str__(self):
+        return str([x for x in self.data])

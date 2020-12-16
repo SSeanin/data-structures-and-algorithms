@@ -1,7 +1,29 @@
 class Node:
-    def __init__(self, data, next_element=None):
+    def __init__(self, data, next_element=None, previous_element=None):
         self.data = data
         self.next = next_element
+        self.previous = previous_element
+
+    def __str__(self):
+        return f'{self.previous.data if self.previous is not None else None} ' \
+               f'{self.data} ' \
+               f'{self.next.data if self.next is not None else None}'
+
+
+def insert_before_node(node: Node, new_node: Node):
+    new_node.next = node
+    new_node.previous = node.previous
+    if node.previous is not None:
+        node.previous.next = new_node
+    node.previous = new_node
+
+
+def delete_previous_node(node: Node):
+    if node.previous is None:
+        raise IndexError('No previous node found')
+
+    node.previous.previous.next = node
+    node.previous = node.previous.previous
 
 
 class LinkedList:
@@ -9,7 +31,7 @@ class LinkedList:
         self.head = None
 
     def insert_first(self, data):
-        self.head = Node(data, next_element=self.head.next)
+        self.head = Node(data, next_element=self.head if self.head is not None else None)
 
     def insert_last(self, data):
         counter: Node = self.head
@@ -22,24 +44,27 @@ class LinkedList:
     def insert(self, index: int, data):
         counter = self.head
 
-        try:
-            for i in range(index):
-                counter = counter.next
-        except AttributeError:
-            raise IndexError('Index out of bound')
+        for i in range(index - 1):
+            counter = counter.next
 
         counter.next = Node(data, next_element=counter.next)
 
-    def remove_first(self):
+    def remove_head(self):
+        if self.head is None:
+            raise IndexError('List is empty')
+
         first_element = self.head
         self.head = self.head.next
-        return first_element
+        return first_element.data
 
-    def remove_last(self):
-        if self.head is None or self.head.next is None:
+    def remove_tail(self):
+        if self.head is None:
+            raise IndexError('List is empty')
+
+        if self.head.next is None:
             element = self.head
             self.head = None
-            return element
+            return element.data
 
         previous = self.head
         current = self.head.next
@@ -51,30 +76,7 @@ class LinkedList:
         element = current
         previous.next = None
 
-        return element
-
-    def remove(self, index: int):
-        if self.head is None or self.head.next is None:
-            if index == 0:
-                element = self.head
-                self.head = None
-                return element
-
-            raise IndexError('Index out of bound')
-
-        previous = self.head
-        current = self.head.next
-
-        try:
-            for i in range(index + 1):
-                previous = current
-                current = current.next
-        except AttributeError:
-            raise IndexError('Index out of bound')
-
-        previous.next = current.next
-
-        return current
+        return element.data
 
     def size(self) -> int:
         if self.head is None:
@@ -89,46 +91,19 @@ class LinkedList:
 
         return counter
 
-    def reverse(self):
-        pass
-
-    def get(self, index: int) -> Node:
-        if self.head is None:
-            raise IndexError('Index out of bound')
-
-        current = self.head
-
-        try:
-            for i in range(index + 1):
-                current = current.next
-        except AttributeError:
-            raise IndexError('Index out of bound')
-
-        return current
-
     def tail(self) -> Node:
         if self.head is None:
-            raise IndexError('Index out of bound')
+            raise IndexError('List is empty')
 
         current = self.head
 
         while current.next is not None:
             current = current.next
 
-        return current
+        return current.data
 
-    def mid(self) -> Node:
-        if self.head is None:
-            raise IndexError('Index out of bound')
-
-        if self.head.next is None:
-            return self.head
-
-        fast = self.head
-        slow = self.head
-
-        while fast.next is not None and fast.next.next is not None:
-            fast = fast.next.next
-            slow = slow.next
-
-        return slow
+    def __iter__(self):
+        current = self.head
+        while current is not None:
+            yield current.data
+            current = current.next
