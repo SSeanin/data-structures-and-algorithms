@@ -2,6 +2,7 @@ import algorithms.notations as nt
 import structures.queue as queue
 import structures.stack as st
 import structures.linkedlist as linked_list
+import structures.tree as tree
 
 # TEST DRIVERS
 
@@ -104,7 +105,7 @@ import structures.linkedlist as linked_list
 
 # ----------------------   end stack    -----------------------------
 
-# ----------------------   linked list    ----------------------------
+# ----------------------   linked list    ---------------------------
 
 # linked_list = linked_list.LinkedList()
 #
@@ -196,3 +197,64 @@ import structures.linkedlist as linked_list
 #
 # print(first_node)
 # print(second_node)
+
+# ----------------------  end linked list    ------------------------
+
+# ----------------------   tree    ----------------------------------
+
+# root = tree.StrictNode(8)
+#
+# root_left = tree.StrictNode(2)
+# root_left.left_child = tree.StrictNode(3)
+#
+# root_left_middle = tree.StrictNode(5)
+# root_left_middle_left = tree.StrictNode(4)
+# root_left_middle_left_middle = tree.StrictNode(8)
+# root_left_middle_left.middle_child = root_left_middle_left_middle
+# root_left_middle.left_child = root_left_middle_left
+# root_left.middle_child = root_left_middle
+#
+# root_left.middle_child = root_left_middle
+#
+# root_left_right = tree.StrictNode(9)
+# root_left_right_right = tree.StrictNode(2)
+# root_left_right_right_left = tree.StrictNode(1)
+# root_left_right_right.left_child = root_left_right_right_left
+# root_left_right.right_child = root_left_right_right
+#
+# root_left.right_child = root_left_right
+#
+# root_right = tree.StrictNode(5)
+# root_right.left_child = tree.StrictNode(7)
+# root_right.right_child = tree.StrictNode(6)
+#
+# root.left_child = root_left
+# root.right_child = root_right
+
+# Tree Traversal
+# tree.traverse_preorder(root, lambda it: print(it.data, end=' '))
+# print('\n')
+# tree.traverse_inorder(root, lambda it: print(it.data, end=' '))
+# print('\n')
+# tree.traverse_postorder(root, lambda it: print(it.data, end=' '))
+
+# Count the Leaves of the Given Node
+# print(tree.count_leaves(root_right))
+
+# Get Node Depth
+# print(tree.node_depth(root, root_left_middle))
+
+# Binary Search Tree
+bst = tree.BST(10, 62, 16, 46, 48, 2, 3, 4)
+# bst.traverse(lambda it: print(it.data))
+
+# Insert Data
+# bst.insert_data(17)
+# bst.traverse(lambda it: print(it.data))
+
+# Find Node
+# node = bst.find(16)
+# print(node.data)
+
+# Find Minimum
+# print(bst.minimum().data)
